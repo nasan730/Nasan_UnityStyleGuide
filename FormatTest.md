@@ -29,4 +29,24 @@ void Update()
     }
 }
 ```
+
+#リンク
 [Lets GO!!](README.md)
+
+:+1: 絵文字も使える！ :shipit:[^1]
+
+#テーブル
+| 麺 | 味 |
+| --- | --- |
+| そば | 最近よさが分かってきた |
+| うどん | おいしい |
+
+#おりたたみ
+<details>
+
+<summary>クリック</summary>
+### 見出しも行ける
+こんにちは
+</details>
+
+[^1]: [チートシート](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md)https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md.
