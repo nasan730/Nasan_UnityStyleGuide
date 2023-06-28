@@ -7,9 +7,6 @@ ExampleComponent.cs
 ```
 <br>
 
-## Tab
-Tabは一般的なスペース4つ分のものを使用してください。<br>
-
 ## コメントについて
 ### 変数・関数に付けるコメント
  [XML Document](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/xmldoc/recommended-tags#summary)を使用して記述してください。<br>
@@ -48,18 +45,8 @@ private int NumberIncriment(int num)
 コメント文は**一行で簡潔**に記述してください。<br>
 ```C#
 // ----------------------------------------------------------------------
-// 内部計算
+// セパレータコメント
 // ----------------------------------------------------------------------
-
-/// <summary>
-/// 引数にインクリメントを行う関数
-/// </summary>
-/// <param name="num">数</param>
-/// <returns>数</returns>
-private int NumberIncriment(int num)
-{
-    return num++;
-}
 ```
 <br>
 
@@ -88,11 +75,67 @@ TODOコメントやFIXMEコメント等は推奨しています。<br>
 //       そのうち修正を行う
 
 // FIXME: H.N.
-///       もっとより良い処理を行うべき
-//        具体的には…
-//        ほげふが…
+//       もっとより良い処理を行うべき
+//       具体的には…
+//       ほげふが…
 ```
 <br>
 
+## Tab・スペースについて
+Tabは一般的な半角スペース4つ分のものを使用してください。<br>
+
+半角スペースについては下記の表を参考にしてください。
+| 半角スペースを | 対象 |
+| --- | --- |
+| 空ける | `if for foreach while`<br>カンマ`,`<br>算術演算子`+ - * / % =`<br>比較演算子`> < & |` |
+| 空けない | 論理否定演算子`!`<br>インクリメント`++`<br>デクリメント`--`|
+
+
+```C#
+/// <summary>
+/// スペースのサンプル
+/// </summary>
+/// <param name="num">数</param>
+/// <param name="flg">フラグ</param>
+private void ExampleSpaceFunction(int num, bool flg)
+{
+    // 算術・比較演算子は付ける
+    int total = num + num;
+    if (total >= 0)
+    {
+        // インクリメントには付けない
+        total++;
+    }
+    
+    // 論理否定演算子は付けない
+    if (!flg)
+    {
+        flg = !flg;
+    }
+}
+```
+
+## 中括弧について
+字下げオールマンスタイルを使用してください。<br>
+nullチェックやフラグチェックの場合は、一行かつ1つで完結出来るものであれば中括弧なしで早期リターンを行ってください。<br>
+後述しますが、ラムダ式・Getter/Setterに関しては1行で記述できるのであれば1行で記述してください<br>
+
+```C#
+/// <summary>
+/// 中括弧のサンプル
+/// </summary>
+private void ExampleScope()
+{
+    if (!_flg) return;
+    if (!_flg) return;
+
+    if (true)
+    {
+        // 処理
+    }
+}
+```
+
+## 名前空間について
 
 [^1]:あくまでたとえであり実際にそうしろとは言いませんが、極力長いコメントは避けるべきです。
