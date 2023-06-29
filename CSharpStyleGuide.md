@@ -166,7 +166,7 @@ namespace Project.InGame.Player
 1. [System名前空間](https://learn.microsoft.com/ja-jp/dotnet/api/system?view=net-7.0)
 2.  [UnityEngine名前空間](https://docs.unity3d.com/ja/2023.2/ScriptReference/index.html)
 3.  [Unity Registry](https://docs.unity3d.com/ja/2023.2/Manual/upm-ui-install.html)からインストールするパッケージ<br>
-4.  GitHubなど外部から取得した名前空間
+4.  GitHubなど外部から取得したソースコード名前空間
 5.  NasanUtilityクラス
 6.  プロジェクトの名前空間
 
@@ -175,6 +175,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+// using 外部から取得したソースコードの名前空間;
 using TMPro;
 using NasanUtility;
 using Project.System;
@@ -234,6 +235,7 @@ public interface IExampleInterface
 10. `enum struct class`
 
 ### サンプルコード
+todo 折りたたみ
 ```C#
 using System;
 using System.Collections;
@@ -349,7 +351,7 @@ namespace Project.Example
         }
 
         /// <summary>
-        /// デリゲートに登録
+        /// デリゲート登録
         /// </summary>
         public RegisterCallBack(Action callBack)
         {
@@ -357,7 +359,7 @@ namespace Project.Example
         }
 
         /// <summary>
-        /// デリゲートに解除
+        /// デリゲート解除
         /// </summary>
         public UnRegisterCallBack(Action callBack)
         {
@@ -365,7 +367,7 @@ namespace Project.Example
         }
 
         /// <summary>
-        /// デリゲート全解除
+        /// デリゲートを全解除
         /// </summary>
         public AllUnRegisterCallBacks()
         {
