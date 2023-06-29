@@ -117,19 +117,25 @@ private void ExampleSpaceFunction(int num, bool flg)
 
 ## 中括弧について
 字下げオールマンスタイルを使用してください。<br>
-nullチェックやフラグチェックの場合は、一行かつ1つで完結出来るものであれば中括弧なしで早期リターンを行ってください。<br>
+nullチェックやフラグチェックの場合は、かつ一行で完結出来るものであれば中括弧なしで早期リターンを行ってください。<br>
 後述しますが、ラムダ式・Getter/Setterに関しては1行で記述できるのであれば1行で記述してください<br>
 
 ```C#
 /// <summary>
 /// 中括弧のサンプル
 /// </summary>
-private void ExampleScope()
+/// <param name="num">数</param>
+private void ExampleScope(int num)
 {
-    if (!_flg) return;
+    // 早期リターンは一行でOk
+    if (num > 0) return;
     if (!_flg) return;
 
     if (true)
+    {
+        // 処理
+    }
+    else
     {
         // 処理
     }
@@ -155,7 +161,8 @@ namespace Project.InGame.Player
 <br>
 
 ## usingディレクティブについて
-基本的に`.`の数が短い順かつアルファベット順で、以下の順序で記述してください。
+ファイルの一番上に記述してください。<br>
+基本的に`.`の数が少ない順かつアルファベット順で、以下の順序で記述してください。
 1. [System名前空間](https://learn.microsoft.com/ja-jp/dotnet/api/system?view=net-7.0)
 2.  [UnityEngine名前空間](https://docs.unity3d.com/ja/2023.2/ScriptReference/index.html)
 3.  [Unity Registry](https://docs.unity3d.com/ja/2023.2/Manual/upm-ui-install.html)からインストールするパッケージ<br>
@@ -199,11 +206,207 @@ public interface IExampleInterface
 ## クラス内順序について
 ### 修飾子順序について
 以下の順序で記述してください。<br>
-`public protected internal private new abstract override sealed static readonly extern unsafe volatile async`
+1. `public`
+2. `protected`
+3. `internal`
+4. `private`
+5. `new`
+6. `abstract`
+7. `override`
+8. `readonly`
+9. `extern`
+10. `unsafe`
+11. `volatile`
+12. `async`
+<br>
+
+### メンバー・要素順序について
+以下の順序で記述してください。
+1. `static const readonly` フィールド
+2. `public protected private` フィールド
+3. `get set`プロパティ
+4. `Action Func`等のデリゲート
+5. コンストラクタ・デストラクタ
+6. 継承関数
+7. Unityメゾット
+8. 公開関数
+9. 内部関数
+10. `enum struct class`
+
+### サンプルコード
+```C#
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Project.Example
+{
+    /// <summary> 数クラス </summary>
+    public abstract class ExampleNumber : MonoBehaviour
+    {
+        // ----------------------------------------------------------------------
+        // 定数
+        // ----------------------------------------------------------------------
+
+        /// <summary> 静的ナンバー </summary>
+        public static int StaticNumber = 1;
+
+        /// <summary> 定数ナンバー </summary>
+        public const int ConstantNumber = 1;
+
+        // ----------------------------------------------------------------------
+        // 変数
+        // ----------------------------------------------------------------------
+
+        /// <summary> 公開ナンバー </summary>
+        public int freeNumber = 1;
+
+        /// <summary> 継承ナンバー </summary>
+        protected int inheritanceNumber = 1;
+        
+        /// <summary> 内部ナンバー </summary>
+        private int _number = 1;
+
+        // ----------------------------------------------------------------------
+        // 継承関数
+        // ----------------------------------------------------------------------
+
+        /// <summary>
+        /// 継承関数
+        /// </summary>
+        protected abstract void InheritanceFunction();
+    }
+
+    /// <summary> サンプルクラス </summary>
+    public class ExampleClass : ExampleNumber
+    {
+        // ----------------------------------------------------------------------
+        // 変数
+        // ----------------------------------------------------------------------
+
+        /// <summary> ステータス </summary>
+        private Status _status;
+
+        /// <summary> ナンバーのゲッター </summary>
+        public int GetNummber => freeNumber;
+
+        /// <summary> デリゲート </summary>
+        public Action _exampleCallBacks = null;
+
+        // ----------------------------------------------------------------------
+        // コンストラクタ
+        // ----------------------------------------------------------------------
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public ExampleClass()
+        {
+            
+        }
+        
+        // ----------------------------------------------------------------------
+        // 継承関数
+        // ----------------------------------------------------------------------
+
+        /// <inheritdoc/>
+        protected override InheritanceFunction()
+        {
+            Debug.Log("継承！");
+        }
+
+        // ----------------------------------------------------------------------
+        // Unityメゾット
+        // ----------------------------------------------------------------------
+
+        /// <summary>
+        /// 初期化処理
+        /// </summary>
+        private void Start()
+        {
+            Initalize();
+        }
+
+        /// <summary>
+        /// 破壊時処理
+        /// </summary>
+        private void OnDestroy()
+        {
+            AllUnRegisterCallBacks();
+        }
+
+        // ----------------------------------------------------------------------
+        // 公開関数
+        // ----------------------------------------------------------------------
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public Initalize()
+        {
+            PrintDebugLog("初期化！");
+        }
+
+        /// <summary>
+        /// デリゲートに登録
+        /// </summary>
+        public RegisterCallBack(Action callBack)
+        {
+            _exampleCallBacks += callBack;
+        }
+
+        /// <summary>
+        /// デリゲートに解除
+        /// </summary>
+        public UnRegisterCallBack(Action callBack)
+        {
+            _exampleCallBacks -= callBack;
+        }
+
+        /// <summary>
+        /// デリゲート全解除
+        /// </summary>
+        public AllUnRegisterCallBacks()
+        {
+            _exampleCallBacks = null;
+        }
+
+        // ----------------------------------------------------------------------
+        // 内部関数
+        // ----------------------------------------------------------------------
+
+        /// <summary>
+        /// デバッグログ表示
+        /// </summary>
+        /// <param name="text">テキスト</param>
+        private void PrintDebugLog(string text)
+        {
+            Debug.Log(text);
+        }
+        
+        // ----------------------------------------------------------------------
+        // クラス
+        // ----------------------------------------------------------------------
+
+        /// <summary> ステータス </summary>
+        private class Status
+        {
+            /// <summary> 体力 </summary>
+            public hp = 0;
+            
+            /// <summary> 魔力 </summary>
+            public mp = 0;
+        }
+
+    }
+}
+
+```
 
 ## 変数について
-**キャメルケース**で記述してください。
-privateな変数は頭に`_`を付けて**キャメルケース**で記述してください。
+**キャメルケース**で記述してください。<br>
+`private`な変数は頭に`_`を付けて**キャメルケース**で記述してください。
 
 ```C#
 public string name = "SuperName";
@@ -211,6 +414,18 @@ protected int maxHp = 10;
 protected int _hp = 0;
 ```
 
+## 列挙型・定数について
 
+## getter・setterについて
+
+## 属性について
+
+## ref・out・verについて
+
+## field初期化について
+
+## ログ・アサーションについて
+
+## コピーライトについて
 
 [^1]:あくまでたとえであり実際にそうしろとは言いませんが、極力長いコメントは避けるべきです。
