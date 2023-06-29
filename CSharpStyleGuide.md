@@ -175,8 +175,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-// using 外部から取得したソースコードの名前空間;
 using TMPro;
+// using 外部から取得したソースコードの名前空間;
 using NasanUtility;
 using Project.System;
 ```
