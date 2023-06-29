@@ -236,7 +236,7 @@ public interface IExampleInterface
 
 ### サンプルコード
 折りたたみ
-<details>
+
 ```C#
 using System;
 using System.Collections;
@@ -406,7 +406,7 @@ namespace Project.Example
 }
 
 ```
-</details>
+
 <br>
 
 ## 変数について
