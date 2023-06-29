@@ -137,5 +137,80 @@ private void ExampleScope()
 ```
 
 ## 名前空間について
+基本的にはAssets以下のフォルダ階層と同じで、**パスカルケース**で付けてください。<br>
+ただし`Scripts`は省略します。<br>
+
+例：`Assets/Project/Scripts/InGame/Player/PlayerMovement.cs`の場合<br>
+```C#
+namespace Project.InGame.Player
+{
+    /// <summary> プレイヤー移動 </summary>
+    public class PlayerMovement
+    {
+        /// <summary> 移動速度 </summary>
+        private float _speed = 1.0f;
+    }
+}
+```
+<br>
+
+## usingディレクティブについて
+基本的に`.`の数が短い順かつアルファベット順で、以下の順序で記述してください。
+1. [System名前空間](https://learn.microsoft.com/ja-jp/dotnet/api/system?view=net-7.0)
+2.  [UnityEngine名前空間](https://docs.unity3d.com/ja/2023.2/ScriptReference/index.html)
+3.  [Unity Registry](https://docs.unity3d.com/ja/2023.2/Manual/upm-ui-install.html)からインストールするパッケージ<br>
+4.  GitHubなど外部から取得した名前空間
+5.  NasanUtilityクラス
+6.  プロジェクトの名前空間
+
+```C#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using NasanUtility;
+using Project.System;
+```
+
+## クラス・構造体・インターフェースについて
+クラス・構造体名は**パスカルケース**で記述してください。<br>
+インターフェースクラスは頭に`I`を付けて**パスカルケース**で記述してください。
+```C#
+/// <summary> サンプルクラス </summary>
+public class ExampleClass
+{
+
+}
+
+/// <summary> サンプル構造体 </summary>
+public struct ExampleStruct
+{
+
+}
+
+/// <summary> サンプルインターフェース </summary>
+public interface IExampleInterface
+{
+
+}
+```
+
+## クラス内順序について
+### 修飾子順序について
+以下の順序で記述してください。<br>
+`public protected internal private new abstract override sealed static readonly extern unsafe volatile async`
+
+## 変数について
+**キャメルケース**で記述してください。
+privateな変数は頭に`_`を付けて**キャメルケース**で記述してください。
+
+```C#
+public string name = "SuperName";
+protected int maxHp = 10;
+protected int _hp = 0;
+```
+
+
 
 [^1]:あくまでたとえであり実際にそうしろとは言いませんが、極力長いコメントは避けるべきです。
