@@ -235,7 +235,8 @@ public interface IExampleInterface
 10. `enum struct class`
 
 ### サンプルコード
-todo 折りたたみ
+折りたたみ
+<details>
 ```C#
 using System;
 using System.Collections;
@@ -405,6 +406,8 @@ namespace Project.Example
 }
 
 ```
+</details>
+<br>
 
 ## 変数について
 **キャメルケース**で記述してください。<br>
