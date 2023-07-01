@@ -41,9 +41,10 @@
 <br>
 
 # 1. ファイル名について
-**パスカルケース**で、Unicode(UTF-8 シグネチャ付き)で作成してください。
-基本的に**一つのファイルに一つのクラス**を作成して下さい。
-定義用のクラス等は複数作成しても構いません。
+**パスカルケース**で、Unicode(UTF-8 シグネチャ付き)で作成してください。<br>
+基本的に**一つのファイルに一つのクラス**を作成して下さい。<br>
+定義用のクラス等は複数作成しても構いません。<br>
+
 ```C#
 ExampleComponent.cs
 ```
@@ -74,7 +75,7 @@ ExampleComponent.cs
 <br>
 
 # 3. usingディレクティブについて
-ソースコードの[コピーライト表記](#2-コピーライト表記について)の一番上に記述してください。<br>
+ソースコードの[コピーライト表記](#2-コピーライト表記について)の次に記述してください。<br>
 基本的に`.`の**数が少ない順**かつ**アルファベット順**で、以下の順序で記述してください。
 1. [System名前空間](https://learn.microsoft.com/ja-jp/dotnet/api/system?view=net-7.0)
 2.  [UnityEngine名前空間](https://docs.unity3d.com/ja/2023.2/ScriptReference/index.html)
@@ -540,6 +541,9 @@ public enum Condition
 [Max(10)]
 private int _num = 0;
 ```
+<br>
+<br>
+<br>
 
 # 16. デリゲートについて
 基本的に`private`で作成し、末尾に`CallBacks`を付けて**キャメルケース**で記述してください。<br>
@@ -550,7 +554,7 @@ private int _num = 0;
 <br>
 
 # 17. ラムダ式について
-一行で記述出来るのであれば一行で記述してください。
+一行で記述出来るのであれば一行で記述してください。<br>
 二行以上になる場合は**括弧を付けて字下げオールマンスタイル**を使用してください。<br>
 ```C#
 Action<int, int> action = null;
@@ -873,8 +877,10 @@ private (int min, int max) GetMinMax()
 
 # 22. ログ・アサーションについて
 `System.Diagnostics`の[`Debug.Assert`](https://learn.microsoft.com/ja-jp/dotnet/api/system.diagnostics.debug.assert?view=net-7.0)ではなく、<br>
-`UnityEngine.Assertions`の[`Assert`](https://docs.unity3d.com/ja/2021.1/ScriptReference/Assertions.Assert.html)を使用してください。
-
+`UnityEngine.Assertions`の[`Assert`](https://docs.unity3d.com/ja/2021.1/ScriptReference/Assertions.Assert.html)を使用してください。<br>
+<br>
+<br>
+<br>
 
 # 23. サンプルコード
 <details>
