@@ -1,5 +1,7 @@
 # C# StyleGuide<!-- omit in toc -->
 
+## 目次
+
 - [1. ファイル名について](#1-ファイル名について)
 - [2. コピーライト表記について](#2-コピーライト表記について)
 - [3. usingディレクティブについて](#3-usingディレクティブについて)
@@ -28,11 +30,11 @@
   - [18.2. デリゲート関連の関数ルール](#182-デリゲート関連の関数ルール)
   - [18.3. コルーチンの関数ルール](#183-コルーチンの関数ルール)
 - [19. 引数について](#19-引数について)
-  - [20. ref・outについて](#20-refoutについて)
-- [21. verについて](#21-verについて)
-- [22. タプルについて](#22-タプルについて)
-- [23. ログ・アサーションについて](#23-ログアサーションについて)
-- [24. サンプルコード](#24-サンプルコード)
+  - [19.1. デフォルト引数・ref・out](#191-デフォルト引数refout)
+- [20. verについて](#20-verについて)
+- [21. タプルについて](#21-タプルについて)
+- [22. ログ・アサーションについて](#22-ログアサーションについて)
+- [23. サンプルコード](#23-サンプルコード)
 
 <br>
 <br>
@@ -40,6 +42,8 @@
 
 # 1. ファイル名について
 **パスカルケース**で、Unicode(UTF-8 シグネチャ付き)で作成してください。
+基本的に**一つのファイルに一つのクラス**を作成して下さい。
+定義用のクラス等は複数作成しても構いません。
 ```C#
 ExampleComponent.cs
 ```
@@ -143,11 +147,11 @@ TODOコメントやFIXMEコメント等は使用して構いません。<br>
 <br>
 
 ```C#
-/// <summary> 変数サンプル </summary>
+/// <summary> 変数 コメントサンプル </summary>
 private int _num = 0;
 
 /// <summary>
-/// 関数サンプル
+/// 関数 コメントサンプル
 /// インクリメントを行う関数
 /// </summary>
 /// <param name="num">数</param>
@@ -282,13 +286,13 @@ private void ExampleFunction()
 
 # 8. 名前空間について
 基本的にはAssets以下のフォルダ階層と同じで、**パスカルケース**で付けてください。<br>
-ただし`Scripts`は省略します。<br>
+ただし`Assets`と`Scripts`は省略します。<br>
 
 例：`Assets/Project/Scripts/InGame/Example/ExampleClass.cs`の場合<br>
 ```C#
 namespace Project.InGame.Example
 {
-    /// <summary> プレイヤー移動 </summary>
+    /// <summary> サンプルクラス </summary>
     public class ExampleClass
     {
         // クラス内の記述
@@ -570,7 +574,9 @@ action = (x) =>
 **パスカルケース**で、記述してください。<br>
 **行数が50行を超えそうな場合、処理を切り分けることが出来ないか検討してください。**<br>
 ```C#
-/// <summary> サンプル関数 </summary>
+/// <summary>
+/// サンプル関数
+/// </summary>
 private void ExampleFunction()
 {
     // 処理
@@ -588,25 +594,33 @@ private void ExampleFunction()
 `InitXXX`・`FinalXXX`と記述してください。
 
 ```C#
-/// <summary> 初期化 </summary>
+/// <summary>
+/// 初期化 
+/// </summary>
 public void Initialize()
 {
     InitStatus();
 }
 
-/// <summary> 終了処理 </summary>
+/// <summary>
+///  終了処理
+///  </summary>
 public void Finalize()
 {
     FinalStatus();
 }
 
-/// <summary> ステータスの初期化 </summary>
+/// <summary>
+///  ステータスの初期化
+///  </summary>
 private void InitStatus()
 {
     // 処理
 }
 
-/// <summary> ステータスの終了処理 </summary>
+/// <summary> 
+/// ステータスの終了処理 
+/// </summary>
 private void FinalStatus()
 {
     // 処理
@@ -621,12 +635,13 @@ private void FinalStatus()
 
 | 条件 | 関数名 |
 | --- | --- |
-| 関数を**登録**する | `RegisterXXXCallBack` |
-| 関数を**解除**する | `UnregisterXXXCallBack`|
-| 関数を**全解除**する | `AllUnregisterXXXCallBacks`|
 | 関数を**追加**する | `AddXXXCallBack`|
 | 関数を**除外**する | `RemoveXXXCallBack`|
 | 関数を**全除外**する | `AllRemoveXXXCallBacks`|
+| 関数を**登録**する | `RegisterXXXCallBack` |
+| 関数を**解除**する | `UnregisterXXXCallBack`|
+| 関数を**全解除**する | `AllUnregisterXXXCallBacks`|
+
 
 <details>
 
@@ -648,6 +663,33 @@ public class ExampleDelegateManagement
     // ----------------------------------------------------------------------
     // 公開関数
     // ----------------------------------------------------------------------
+
+    /// <summary>
+    /// デリゲートの追加
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void AddSampleCallBack(Action callBack)
+    {
+        _sampleCallBacks += callBack;
+    }
+
+    /// <summary>
+    /// デリゲートの除外
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void RemoveSampleCallBack(Action callBack)
+    {
+        _sampleCallBacks -= callBack;
+    }
+
+    /// <summary>
+    /// デリゲートの全除外
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void AllRemoveSampleCallBack()
+    {
+        _sampleCallBacks = null;
+    }
 
     /// <summary>
     /// デリゲートの登録
@@ -676,33 +718,6 @@ public class ExampleDelegateManagement
     public void AllUnregisterSampleCallBacks()
     {
         _sampleCallBacks = null;
-    }
-
-    /// <summary>
-    /// デリゲートの追加
-    /// </summary>
-    /// <param name="callBack">デリゲート</param>
-    public void AddSampleCallBack(Action callBack)
-    {
-        _sampleCallBacks += callBack;
-    }
-
-    /// <summary>
-    /// デリゲートの除外
-    /// </summary>
-    /// <param name="callBack">デリゲート</param>
-    public void RemoveSampleCallBack(Action callBack)
-    {
-        _sampleCallBacks -= callBack;
-    }
-
-    /// <summary>
-    /// デリゲートの全除外
-    /// </summary>
-    /// <param name="callBack">デリゲート</param>
-    public void AllRemoveSampleCallBack()
-    {
-        _sampleCallBacks = callBack;
     }
 }
 ```
@@ -787,16 +802,22 @@ private IEnumerator CoroutineExample()
 <br>
 
 # 19. 引数について
-**キャメルケース**で記述し、[デフォルト引数](https://learn.microsoft.com/ja-jp/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#optional-arguments)は末端に記述してください。
+**キャメルケース**で記述してください。
 ```C#
-public void ExampleFunciton(int name, int num = 0)
+/// <summary>
+/// サンプル関数
+/// </summary>
+public void ExampleFunciton(string name, int num)
 {
     // 処理
 }
 ```
+<br>
+<br>
+<br>
 
-## 20. ref・outについて
-**キャメルケース**で記述し、[デフォルト引数](https://learn.microsoft.com/ja-jp/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#optional-arguments)より後に記述してください。
+## 19.1. デフォルト引数・ref・out
+[デフォルト引数](https://learn.microsoft.com/ja-jp/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#optional-arguments) -> [`out`](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/keywords/out-parameter-modifier) -> [`ref`](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/keywords/ref) の順で記述してください。
 ```C#
 public bool ExampleFunciton(int name, int num = 0, out int retNum)
 {
@@ -804,47 +825,58 @@ public bool ExampleFunciton(int name, int num = 0, out int retNum)
     // return ...;
 }
 ```
+<br>
+<br>
+<br>
 
-# 21. verについて
+# 20. verについて
 [組み込み型](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/builtin-types/built-in-types)についてはvarを使用しないでください。<br>
 それ以外の型については**型が明示されているのであれば**使用しても構いません。<br>
 ```C#
-// NG
-int num = 0;
-//var tmp = num;
+// × NG
+// int num = 0;
+// var tmp = num;
 
 // OK
 var rb = GetComponent<Rigidbody>();
 ```
+<br>
+<br>
+<br>
 
-# 22. タプルについて
+# 21. タプルについて
 [タプル型](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/builtin-types/value-tuples)は、**そのクラスのスコープ内**であれば使用しても構いません。<br>
 例えば、最小値と最大値を求めるときなどです。
 
 タプルのフィールド名は**必ず記述**してください。
 ```C#
+/// <summary>
+/// サンプル関数
+/// </summary>
 private void ExampleFunciton()
 {
     var minMax = GetMinMax();
 }
 
+/// <summary>
+/// 最小と最大を記述
+/// </summary>
 private (int min, int max) GetMinMax()
 {
     min = 0;
     max = 100;
 }
-
 ```
+<br>
+<br>
+<br>
 
-
-# 23. ログ・アサーションについて
+# 22. ログ・アサーションについて
 `System.Diagnostics`の[`Debug.Assert`](https://learn.microsoft.com/ja-jp/dotnet/api/system.diagnostics.debug.assert?view=net-7.0)ではなく、<br>
 `UnityEngine.Assertions`の[`Assert`](https://docs.unity3d.com/ja/2021.1/ScriptReference/Assertions.Assert.html)を使用してください。
 
 
-# 24. サンプルコード
-長いので折りたたみ。
-
+# 23. サンプルコード
 <details>
 
 <summary>サンプルコード</summary>
@@ -878,29 +910,29 @@ namespace Project.Example
         // ----------------------------------------------------------------------
 
         /// <summary> 静的ナンバー </summary>
-        public static int StaticNumber = 1;
+        public static int StaticNum = 1;
 
         /// <summary> 定数ナンバー </summary>
-        public const int ConstantNumber = 1;
+        public const int ConstantNum = 1;
 
         // ----------------------------------------------------------------------
         // 変数
         // ----------------------------------------------------------------------
 
-        /// <summary> ステータス </summary>
+        /// <summary> ステータスクラス </summary>
         private Status _status;
 
         /// <summary> 公開ナンバー </summary>
-        public int freeNumber = 1;
+        public int publicNum = 1;
 
         /// <summary> 継承ナンバー </summary>
-        protected int inheritanceNumber = 1;
+        protected int protectedNum = 1;
         
         /// <summary> 内部ナンバー </summary>
-        private int _number = 1;
+        private int _privateNum = 1;
 
-        /// <summary> ナンバーのゲッター </summary>
-        public int nummber => _number;
+        /// <summary> ナンバー </summary>
+        public int nummber => _privateNum;
 
         /// <summary> デリゲート </summary>
         public Action _exampleCallBacks = null;
@@ -914,7 +946,7 @@ namespace Project.Example
         /// </summary>
         public ExampleClass()
         {
-            
+            _exampleCallBacks = null;
         }
         
         // ----------------------------------------------------------------------
@@ -962,7 +994,7 @@ namespace Project.Example
         /// <summary>
         /// デリゲート登録
         /// </summary>
-        public RegisterCallBack(Action callBack)
+        public AddCallBack(Action callBack)
         {
             _exampleCallBacks += callBack;
         }
@@ -970,7 +1002,7 @@ namespace Project.Example
         /// <summary>
         /// デリゲート解除
         /// </summary>
-        public UnRegisterCallBack(Action callBack)
+        public RemoveCallBack(Action callBack)
         {
             _exampleCallBacks -= callBack;
         }
@@ -978,7 +1010,7 @@ namespace Project.Example
         /// <summary>
         /// デリゲートを全解除
         /// </summary>
-        public AllUnRegisterCallBacks()
+        public AllRemoveCallBacks()
         {
             _exampleCallBacks = null;
         }
@@ -1000,7 +1032,7 @@ namespace Project.Example
         // クラス
         // ----------------------------------------------------------------------
 
-        /// <summary> ステータス </summary>
+        /// <summary> ステータスクラス </summary>
         private class Status
         {
             /// <summary> 体力 </summary>
@@ -1016,7 +1048,6 @@ namespace Project.Example
 ```
 
 </details>
-
 <br>
-
-[^1]:あくまでたとえであり実際にそうしろとは言いませんが、極力長いコメントは避けるべきです。
+<br>
+<br>
