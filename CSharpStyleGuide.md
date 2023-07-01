@@ -6,7 +6,6 @@
 - [4. コメントについて](#4-コメントについて)
   - [4.1. 変数・関数に付けるコメント](#41-変数関数に付けるコメント)
   - [4.2. セパレータコメント](#42-セパレータコメント)
-  - [4.3. コメント](#43-コメント)
 - [5. Tab・スペースについて](#5-tabスペースについて)
 - [6. 中括弧について](#6-中括弧について)
 - [7. クラス内順序について](#7-クラス内順序について)
@@ -36,6 +35,9 @@
 - [23. ログ・アサーションについて](#23-ログアサーションについて)
 - [24. サンプルコード](#24-サンプルコード)
 
+<br>
+<br>
+<br>
 
 # 1. ファイル名について
 **パスカルケース**で、Unicode(UTF-8 シグネチャ付き)で作成してください。
@@ -43,11 +45,18 @@
 ExampleComponent.cs
 ```
 <br>
+<br>
+<br>
 
 # 2. コピーライト表記について
-ファイルの一番上に以下のコメント文を追加してください。<br>
-`XXX`にファイル名、`YEAR`に現在の年度、<br>
-`説明`にそのファイルの説明`YOUR_NAME`に自分の名前を記述してください
+ソースコードの一番上に以下のコメント文を追加してください。<br>
+下記の表を見て単語を置き換えてください。
+| 単語 | 変更内容 |
+| --- | --- |
+| `XXX.cs` | ソースコードのファイル名 |
+| `説明` | ソースコードの簡易な説明 |
+| `YEAR` | 現在の西暦 |
+| `YOUR_NAME` | 作成者名 |
 
 ```C#
 /**
@@ -57,16 +66,20 @@ ExampleComponent.cs
  *  Copyright YEAR YOUR_NAME All rights reserved.
  */
 ```
+<br>
+<br>
+<br>
 
 # 3. usingディレクティブについて
-ファイルの一番上に記述してください。<br>
-基本的に`.`の数が少ない順かつアルファベット順で、以下の順序で記述してください。
+ソースコードの[コピーライト表記](#2-コピーライト表記について)の一番上に記述してください。<br>
+基本的に`.`の**数が少ない順**かつ**アルファベット順**で、以下の順序で記述してください。
 1. [System名前空間](https://learn.microsoft.com/ja-jp/dotnet/api/system?view=net-7.0)
 2.  [UnityEngine名前空間](https://docs.unity3d.com/ja/2023.2/ScriptReference/index.html)
-3.  [Unity Registry](https://docs.unity3d.com/ja/2023.2/Manual/upm-ui-install.html)からインストールするパッケージ<br>
-4.  GitHubなど外部から取得したソースコード名前空間
-5.  NasanUtilityクラス
-6.  プロジェクトの名前空間
+3.  [Unity Registry](https://docs.unity3d.com/ja/2023.2/Manual/upm-ui-install.html)からインストールしたパッケージのソースコードの名前空間<br>
+4.  GitHubなど外部から取得したソースコードの名前空間
+5.  NasanUtility名前空間
+6.  プロジェクトのゲーム系統の名前空間
+7.  プロジェクトのシステム系統の名前空間
 
 ```C#
 using System.Collections;
@@ -76,30 +89,50 @@ using UnityEngine.UI;
 using TMPro;
 // using 外部から取得したソースコードの名前空間;
 using NasanUtility;
+using Project.InGame.Player;
 using Project.System;
 ```
+<br>
+<br>
+<br>
 
 # 4. コメントについて
-## 4.1. 変数・関数に付けるコメント
- [XML Document](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/xmldoc/recommended-tags#summary)を使用して記述してください。<br>
+コードだけでは意図が伝わらない場合、**簡潔で分かりやすいコメントを心がけてください。**<br>
 
-Visual Studio 及び Rider等を使用しているのであれば`/`を三回押すことで<br>
-自動的に`<summary>`が付きます。
+目安としては**一行半角50文字、全角25文字以内とし、最大で3行まで**に収めてください。<br>
+それが難しい場合は、処理内容を一度分割して簡潔に説明出来るように考え直してください。<br>
 
+コメントは`//`を使用し、半角スペースを空けて記述してください。<br>
+`/* */`は使用禁止です。<br>
 ```C#
-/// <summary> 数 </summary>
-private int _number = 0;
-
-/// <summary>
-/// 引数にインクリメントを行う関数
-/// </summary>
-/// <param name="num">数</param>
-/// <returns>数</returns>
-private int NumberIncriment(int num)
-{
-    return num++;
-}
+// コメントの一例
+// コメントは短く簡潔に
+// 全角２５文字はこれくらい！！！！！！！！！！！！！
 ```
+<br>
+
+TODOコメントやFIXMEコメント等は使用して構いません。<br>
+文字数制限は同じく**一行半角50文字、全角25文字以内**、行数に制限はありません。<br>
+必要無くなった場合、速やかに消してください。<br>
+
+`TODO`や`FIXME`の後にはコロン`:`と半角スペースを開けて**コメント作成者の名前を記述**し、<br>
+その後コメントを記述してください。
+```C#
+// TODO: YOUR_NAME
+//       そのうち修正を行う
+
+// FIXME: YOUR_NAME
+//        もっとより良い処理を行うべき
+//        具体的には…
+//        さらに…
+```
+<br>
+<br>
+<br>
+
+## 4.1. 変数・関数に付けるコメント
+ [XML Document](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/xmldoc/recommended-tags#summary)を使用して**記述してください**。<br>
+
 一般的に推奨されるXMLタグは以下の通りです。
 
 | XMLタグ | 内容 |
@@ -110,8 +143,27 @@ private int NumberIncriment(int num)
 | `<inheritdoc/>` | virtual関数をoverrideしている関数に付ける<br>基底クラスのXMLで記述した内容がそのまま使用される |
 <br>
 
+```C#
+/// <summary> 変数サンプル </summary>
+private int _num = 0;
+
+/// <summary>
+/// 関数サンプル
+/// インクリメントを行う関数
+/// </summary>
+/// <param name="num">数</param>
+/// <returns>数</returns>
+private int ExampleFunction(int num)
+{
+    return num++;
+}
+```
+<br>
+<br>
+<br>
+
 ## 4.2. セパレータコメント
-コードの可読性を上げるため、使用してください。<br>
+ソースコードの可読性を上げるため、**記述してください**。<br>
 区切り線は`-`を使用し、70文字です。<br>
 コメント`//`と`-`の間には半角スペース一文字開けてください。<br>
 コメント文は**一行で簡潔**に記述してください。<br>
@@ -121,36 +173,7 @@ private int NumberIncriment(int num)
 // ----------------------------------------------------------------------
 ```
 <br>
-
-## 4.3. コメント
-コードだけでは意図が伝わらない場合、**簡潔で分かりやすいコメントを心がけてください。**<br>
-
-目安としては**一行半角50文字、全角25文字以内とし、最大で3行まで**に収めてください。<br>
-それが難しい場合は、処理内容を一度分割して簡潔に説明出来るように考え直してください。[^1]<br>
-
-コメントは`//`を使用し、半角スペースを空けて記述してください。<br>
-`/* */`は使用禁止です。<br>
-```C#
-// コメントの一例
-// コメントは短く簡潔に
-// 全角２５文字はこれくらい！！！！！！！！！！！！！
-```
-
-TODOコメントやFIXMEコメント等は推奨しています。<br>
-文字数制限は上記の通り、行数に制限はありません。<br>
-ただし、修正したら速やかに消してください。<br>
-
-`TODO`や`FIXME`の後にはコロンと半角スペースを開けて自身のハンドルネームを記述し、<br>
-その後にコメントを記述してください。
-```C#
-// TODO: H.N.
-//       そのうち修正を行う
-
-// FIXME: H.N.
-//       もっとより良い処理を行うべき
-//       具体的には…
-//       ほげふが…
-```
+<br>
 <br>
 
 # 5. Tab・スペースについて
