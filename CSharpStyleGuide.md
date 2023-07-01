@@ -1,13 +1,50 @@
-# C# StyleGuide<br>
+# C# StyleGuide<!-- omit in toc -->
 
-## ファイル名について
+- [1. ファイル名について](#1-ファイル名について)
+- [2. コピーライト表記について](#2-コピーライト表記について)
+- [3. usingディレクティブについて](#3-usingディレクティブについて)
+- [4. コメントについて](#4-コメントについて)
+  - [4.1. 変数・関数に付けるコメント](#41-変数関数に付けるコメント)
+  - [4.2. セパレータコメント](#42-セパレータコメント)
+  - [4.3. コメント](#43-コメント)
+- [5. Tab・スペースについて](#5-tabスペースについて)
+- [6. 中括弧について](#6-中括弧について)
+- [7. クラス内順序について](#7-クラス内順序について)
+  - [7.1. 修飾子順序について](#71-修飾子順序について)
+  - [7.2. メンバー・要素順序について](#72-メンバー要素順序について)
+- [8. 名前空間について](#8-名前空間について)
+- [9. クラス・構造体・インターフェースについて](#9-クラス構造体インターフェースについて)
+- [10. 変数について](#10-変数について)
+- [11. field初期化について](#11-field初期化について)
+- [12. getter・setterについて](#12-gettersetterについて)
+  - [12.1. getterプロパティについて](#121-getterプロパティについて)
+  - [12.2. setterプロパティについて](#122-setterプロパティについて)
+- [13. 定数について](#13-定数について)
+- [14. 列挙型について](#14-列挙型について)
+- [15. 属性について](#15-属性について)
+- [16. デリゲートについて](#16-デリゲートについて)
+- [17. ラムダ式について](#17-ラムダ式について)
+- [18. 関数について](#18-関数について)
+  - [18.1. 共通ルール](#181-共通ルール)
+  - [18.2. 初期化・終了処理を行う関数のルール](#182-初期化終了処理を行う関数のルール)
+  - [18.3. デリゲート関連の関数ルール](#183-デリゲート関連の関数ルール)
+  - [18.4. コルーチンの関数ルール](#184-コルーチンの関数ルール)
+- [19. 引数について](#19-引数について)
+  - [20. ref・outについて](#20-refoutについて)
+- [21. verについて](#21-verについて)
+- [22. タプルについて](#22-タプルについて)
+- [23. ログ・アサーションについて](#23-ログアサーションについて)
+- [24. サンプルコード](#24-サンプルコード)
+
+
+# 1. ファイル名について
 **パスカルケース**で、Unicode(UTF-8 シグネチャ付き)で作成してください。
 ```C#
 ExampleComponent.cs
 ```
 <br>
 
-## コピーライト表記について
+# 2. コピーライト表記について
 ファイルの一番上に以下のコメント文を追加してください。<br>
 `XXX`にファイル名、`YEAR`に現在の年度、<br>
 `説明`にそのファイルの説明`YOUR_NAME`に自分の名前を記述してください
@@ -21,7 +58,7 @@ ExampleComponent.cs
  */
 ```
 
-## usingディレクティブについて
+# 3. usingディレクティブについて
 ファイルの一番上に記述してください。<br>
 基本的に`.`の数が少ない順かつアルファベット順で、以下の順序で記述してください。
 1. [System名前空間](https://learn.microsoft.com/ja-jp/dotnet/api/system?view=net-7.0)
@@ -42,8 +79,8 @@ using NasanUtility;
 using Project.System;
 ```
 
-## コメントについて
-### 変数・関数に付けるコメント
+# 4. コメントについて
+## 4.1. 変数・関数に付けるコメント
  [XML Document](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/xmldoc/recommended-tags#summary)を使用して記述してください。<br>
 
 Visual Studio 及び Rider等を使用しているのであれば`/`を三回押すことで<br>
@@ -73,7 +110,7 @@ private int NumberIncriment(int num)
 | `<inheritdoc/>` | virtual関数をoverrideしている関数に付ける<br>基底クラスのXMLで記述した内容がそのまま使用される |
 <br>
 
-### セパレータコメント
+## 4.2. セパレータコメント
 コードの可読性を上げるため、使用してください。<br>
 区切り線は`-`を使用し、70文字です。<br>
 コメント`//`と`-`の間には半角スペース一文字開けてください。<br>
@@ -85,7 +122,7 @@ private int NumberIncriment(int num)
 ```
 <br>
 
-### コメント
+## 4.3. コメント
 コードだけでは意図が伝わらない場合、**簡潔で分かりやすいコメントを心がけてください。**<br>
 
 目安としては**一行半角50文字、全角25文字以内とし、最大で3行まで**に収めてください。<br>
@@ -116,7 +153,7 @@ TODOコメントやFIXMEコメント等は推奨しています。<br>
 ```
 <br>
 
-## Tab・スペースについて
+# 5. Tab・スペースについて
 Tabは一般的な半角スペース4つ分のものを使用してください。<br>
 
 半角スペースについては下記の表を参考にしてください。
@@ -150,7 +187,7 @@ private void ExampleSpaceFunction(int num, bool flg)
 }
 ```
 
-## 中括弧について
+# 6. 中括弧について
 字下げオールマンスタイルを使用してください。<br>
 nullチェックやフラグチェックの場合は、かつ一行で完結出来るものであれば中括弧なしで早期リターンを行ってください。<br>
 後述しますが、ラムダ式・Getter/Setterに関しては1行で記述できるのであれば1行で記述してください<br>
@@ -177,8 +214,8 @@ private void ExampleScope(int num)
 }
 ```
 
-## クラス内順序について
-### 修飾子順序について
+# 7. クラス内順序について
+## 7.1. 修飾子順序について
 以下の順序で記述してください。<br>
 1. `public`
 2. `protected`
@@ -194,7 +231,7 @@ private void ExampleScope(int num)
 12. `async`
 <br>
 
-### メンバー・要素順序について
+## 7.2. メンバー・要素順序について
 以下の順序で記述してください。
 1. `static const readonly` フィールド
 2. `public protected private` フィールド
@@ -209,7 +246,7 @@ private void ExampleScope(int num)
 
 
 
-## 名前空間について
+# 8. 名前空間について
 基本的にはAssets以下のフォルダ階層と同じで、**パスカルケース**で付けてください。<br>
 ただし`Scripts`は省略します。<br>
 
@@ -227,7 +264,7 @@ namespace Project.InGame.Player
 ```
 <br>
 
-## クラス・構造体・インターフェースについて
+# 9. クラス・構造体・インターフェースについて
 クラス・構造体名は**パスカルケース**で記述してください。<br>
 インターフェースクラスは頭に`I`を付けて**パスカルケース**で記述してください。
 ```C#
@@ -250,7 +287,7 @@ public interface IExampleInterface
 }
 ```
 
-## 変数について
+# 10. 変数について
 **キャメルケース**で記述してください。<br>
 `private`な変数は頭に`_`を付けて**キャメルケース**で記述してください。<br>
 
@@ -308,7 +345,7 @@ public class Parameter
 ```
 
 
-## field初期化について
+# 11. field初期化について
 変数の宣言と同時に初期化をしてください。
 クラス・構造体の初期化を行う場合、`new()`を使用してください。
 ```C#
@@ -322,8 +359,8 @@ public void Initialize()
 }
 ```
 
-## getter・setterについて
-### getterプロパティについて
+# 12. getter・setterについて
+## 12.1. getterプロパティについて
 `{ get XXX; }` ・ `=>`どちらを使用しても構いませんが、こだわりがなければ`=>`を使用してください。<br>
 また、1行で記述してください。
 ```C#
@@ -356,7 +393,7 @@ public int GetNumber()
 }
 ```
 
-### setterプロパティについて
+## 12.2. setterプロパティについて
 **使用しないでください。**<br>
 `private`変数に`setter`を付けることは、`public`変数で自由に値を変更していることと同じです。<br>
 
@@ -381,14 +418,14 @@ public int SetNumber(int num)
 }
 ```
 
-## 定数について
+# 13. 定数について
 **パスカルケース**で、記述してください。
 ```C#
 public static int StaticNumber = 0;
 public const int ConstantNumber = 0;
 ```
 
-## 列挙型について
+# 14. 列挙型について
 **パスカルケース**で、記述してください。<br>
 一番最初の列挙名には初期値`=0`を付け、<br>
 除外用の列挙名にはその列挙型内の最低値を入れてください。<br>
@@ -423,7 +460,7 @@ public enum Condition
 ```
 
 
-## 属性について
+# 15. 属性について
 `Serializefield`を使用しているのであれば一番上に記述し、<br>
 それ以降はアルファベット順で、属性1つごとに改行して記述してください。<br>
 ```C#
@@ -433,11 +470,11 @@ public enum Condition
 private int _num = 0;
 ```
 
-## デリゲートについて
+# 16. デリゲートについて
 基本的に`private`で作成し、末尾に`CallBacks`を付けて**キャメルケース**で記述してください。<br>
 デリゲートに関数を登録・解除する場合は[デリゲート関連の関数ルール](#デリゲート関連の関数ルール)を参考に作成してください。
 
-## ラムダ式について
+# 17. ラムダ式について
 一行で記述出来るのであれば一行で記述してください。
 二行以上になる場合は**括弧を付けて字下げオールマンスタイル**を使用してください。<br>
 ```C#
@@ -455,8 +492,8 @@ action = (x) =>
          };
 ```
 
-## 関数について
-### 共通ルール
+# 18. 関数について
+## 18.1. 共通ルール
 **パスカルケース**で、記述してください。<br>
 **行数が50行を超えそうな場合、処理を切り分けることが出来ないか検討してください。**<br>
 ```C#
@@ -467,7 +504,7 @@ private void ExampleFunction()
 }
 ```
 
-### 初期化・終了処理を行う関数のルール
+## 18.2. 初期化・終了処理を行う関数のルール
 初期化を行う場合は頭に`Initialize`、
 終了処理を行う場合は頭に`Finalize`を付けてください。
 
@@ -500,7 +537,7 @@ private void FinalStatus()
 }
 ```
 
-### デリゲート関連の関数ルール
+## 18.3. デリゲート関連の関数ルール
 デリゲートに関数を**渡す側**は頭に`On`を付けて記述してください。
 ```C#
 using UnityEngine;
@@ -631,7 +668,7 @@ public class ExampleDelegate
 </details>
 
 
-### コルーチンの関数ルール
+## 18.4. コルーチンの関数ルール
 頭に`Coroutine`を付けて記述してください。
 ```C#
 /// <summary> サンプルコルーチン </summary>
@@ -641,7 +678,7 @@ private IEnumerator CoroutineExample()
 }
 ```
 
-## 引数について
+# 19. 引数について
 **キャメルケース**で記述し、[デフォルト引数](https://learn.microsoft.com/ja-jp/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#optional-arguments)は末端に記述してください。
 ```C#
 public void ExampleFunciton(int name, int num = 0)
@@ -650,7 +687,7 @@ public void ExampleFunciton(int name, int num = 0)
 }
 ```
 
-## ref・outについて
+## 20. ref・outについて
 **キャメルケース**で記述し、[デフォルト引数](https://learn.microsoft.com/ja-jp/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#optional-arguments)より後に記述してください。
 ```C#
 public bool ExampleFunciton(int name, int num = 0, out int retNum)
@@ -660,7 +697,7 @@ public bool ExampleFunciton(int name, int num = 0, out int retNum)
 }
 ```
 
-## verについて
+# 21. verについて
 [組み込み型](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/builtin-types/built-in-types)についてはvarを使用しないでください。<br>
 それ以外の型については**型が明示されているのであれば**使用しても構いません。<br>
 ```C#
@@ -672,7 +709,7 @@ int num = 0;
 var rb = GetComponent<Rigidbody>();
 ```
 
-## タプルについて
+# 22. タプルについて
 [タプル型](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/builtin-types/value-tuples)は、**そのクラスのスコープ内**であれば使用しても構いません。<br>
 例えば、最小値と最大値を求めるときなどです。
 
@@ -692,12 +729,12 @@ private (int min, int max) GetMinMax()
 ```
 
 
-## ログ・アサーションについて
+# 23. ログ・アサーションについて
 `System.Diagnostics`の[`Debug.Assert`](https://learn.microsoft.com/ja-jp/dotnet/api/system.diagnostics.debug.assert?view=net-7.0)ではなく、<br>
 `UnityEngine.Assertions`の[`Assert`](https://docs.unity3d.com/ja/2021.1/ScriptReference/Assertions.Assert.html)を使用してください。
 
 
-## サンプルコード
+# 24. サンプルコード
 長いので折りたたみ。
 
 <details>
