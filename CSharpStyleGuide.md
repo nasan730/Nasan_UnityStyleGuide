@@ -1047,7 +1047,6 @@ namespace Project.Example
             /// <summary> 魔力 </summary>
             public mp = 0;
         }
-
     }
 }
 
