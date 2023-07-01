@@ -1,4 +1,7 @@
 # C# StyleGuide<br>
+## ぴよ
+### ふが
+#### ほげ
 
 ## ファイル名について
 **パスカルケース**で、Unicode(UTF-8 シグネチャ付き)で作成してください。
@@ -624,15 +627,14 @@ private IEnumerator CoroutineExample()
 
 ## verについて
 [組み込み型](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/builtin-types/built-in-types)についてはvarを使用しないでください。<br>
-それ以外の型については型が明示されているのであれば使用しても構いません。<br>
+それ以外の型については**型が明示されているのであれば**使用しても構いません。<br>
 ```C#
 // NG
 int num = 0;
 //var tmp = num;
 
 // OK
-Rigidbody rb = null;
-rb = GetComponent<Rigidbody>();
+var rb = GetComponent<Rigidbody>();
 ```
 
 ## ref・outについて
