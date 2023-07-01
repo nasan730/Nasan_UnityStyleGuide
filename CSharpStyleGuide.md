@@ -1,5 +1,7 @@
 # C# StyleGuide<!-- omit in toc -->
 
+\[\<== [README](README.md) \] 
+
 ## 目次
 
 - [1. ファイル名について](#1-ファイル名について)
