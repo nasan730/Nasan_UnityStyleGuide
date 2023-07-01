@@ -415,88 +415,30 @@ private int _num = 0;
 
 ## デリゲートについて
 基本的に`private`で作成し、末尾に`CallBacks`を付けて**キャメルケース**で記述してください。<br>
-デリゲートに関数を登録・解除する場合は以下のルールを参考に作成してください。
-[Test](###デリゲート関連の関数ルール)
+デリゲートに関数を登録・解除する場合は[デリゲート関連の関数ルール](#デリゲート関連の関数ルール)を参考に作成してください。
 
-
-<details>
-
-<summary>サンプルコード</summary>
-
+## ラムダ式について
+一行で記述出来るのであれば一行で記述してください。
+二行以上になる場合は**括弧を付けて字下げオールマンスタイル**を使用してください。<br>
 ```C#
-/// <summary> デリゲートサンプルクラス </summary>
-public class ExampleDelegate
-{
-    // ----------------------------------------------------------------------
-    // 変数
-    // ----------------------------------------------------------------------
+Action<int, int> action = null;
 
-    /// <summary> デリゲートサンプル </summary>
-    private Action _sampleCallBacks = null;
+// 一行で収まる場合
+action = x => x + 1 ;
 
-    /// <summary>
-    /// デリゲートの登録
-    /// </summary>
-    /// <param name="callBack">デリゲート</param>
-    public void RegisterSampleCallBack(Action callBack)
-    {
-        _sampleCallBacks = callBack;
-    }
-
-    /// <summary>
-    /// デリゲートの解除
-    /// </summary>
-    /// <param name="callBack">デリゲート</param>
-    public void UnregisterSampleCallBack(Action callBack)
-    {
-        if(callBack == _sampleCallBacks)
-        {
-            _sampleCallBacks = null;
-        }
-    }
-
-    /// <summary>
-    /// デリゲートの全解除
-    /// </summary>
-    public void AllUnregisterSampleCallBack()
-    {
-        _sampleCallBacks = null;
-    }
-
-    /// <summary>
-    /// デリゲートの追加
-    /// </summary>
-    /// <param name="callBack">デリゲート</param>
-    public void AddSampleCallBack(Action callBack)
-    {
-        _sampleCallBacks += callBack;
-    }
-
-    /// <summary>
-    /// デリゲートの除外
-    /// </summary>
-    /// <param name="callBack">デリゲート</param>
-    public void RemoveSampleCallBack(Action callBack)
-    {
-        _sampleCallBacks -= callBack;
-    }
-
-    /// <summary>
-    /// デリゲートの全除外
-    /// </summary>
-    /// <param name="callBack">デリゲート</param>
-    public void AllRemoveSampleCallBack()
-    {
-        _sampleCallBacks = callBack;
-    }
-}
+// 二行以上になる場合
+action = (x) => 
+         {
+            int ret = 0;
+            ret = x * x;
+            return ret;
+         };
 ```
 
-</details>
-
-## 関数名について
+## 関数について
 ### 共通ルール
-**パスカルケース**で、記述してください。
+**パスカルケース**で、記述してください。<br>
+**行数が50行を超えそうな場合、処理を切り分けることが出来ないか検討してください。**<br>
 ```C#
 /// <summary> サンプル関数 </summary>
 private void ExampleFunction()
@@ -505,8 +447,84 @@ private void ExampleFunction()
 }
 ```
 
+### 初期化・終了処理を行う関数のルール
+初期化を行う場合は頭に`Initialize`、
+終了処理を行う場合は頭に`Finalize`を付けてください。
+
+初期化・終了処理の後に続く関数名が存在する場合に限り、
+`InitXXX`・`FinalXXX`と記述しても構いません。
+
+```C#
+/// <summary> 初期化 </summary>
+public void Initialize()
+{
+    InitStatus();
+}
+
+/// <summary> 終了処理 </summary>
+public void Finalize()
+{
+    FinalStatus();
+}
+
+/// <summary> ステータスの初期化 </summary>
+private void InitStatus()
+{
+    // 処理
+}
+
+/// <summary> ステータスの終了処理 </summary>
+private void FinalStatus()
+{
+    // 処理
+}
+```
+
 ### デリゲート関連の関数ルール
-デリゲートに関数を**登録・解除行う**場合は以下のルールを参考に作成してください。
+デリゲートに関数を**渡す側**は頭に`On`を付けて記述してください。
+```C#
+using UnityEngine;
+
+/// <summary> デリゲートサンプルクラス </summary>
+public class ExampleClass : MonoBehaviour
+{
+    // ----------------------------------------------------------------------
+    // 変数
+    // ----------------------------------------------------------------------
+
+    /// <summary> デリゲートクラス </summary>
+    private ExampleDelegate _example = null;
+
+    // ----------------------------------------------------------------------
+    // Unityメゾット
+    // ----------------------------------------------------------------------
+
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
+    private void Start()
+    {
+        _example = new();
+        _example.AddSampleCallBack(OnShowLog);
+    }
+
+    // ----------------------------------------------------------------------
+    // 内部関数
+    // ----------------------------------------------------------------------
+
+    /// <summary>
+    /// ログの表示
+    /// </summary>
+    private void OnShowLog()
+    {
+        Debug.Log("Hello!");
+    }
+}
+
+```
+
+
+デリゲートに関数を**登録・解除される**側は以下のルールを参考に作成してください。
 
 | 条件 | 関数名 |
 | --- | --- |
@@ -593,7 +611,15 @@ public class ExampleDelegate
 </details>
 
 
-### コルーチン
+### コルーチンの関数ルール
+頭に`Coroutine`を付けて記述してください。
+```C#
+/// <summary> サンプルコルーチン </summary>
+private IEnumerator CoroutineExample() 
+{
+    // 処理
+}
+```
 
 
 ## verについて
