@@ -1,7 +1,4 @@
 # C# StyleGuide<br>
-## ぴよ
-### ふが
-#### ほげ
 
 ## ファイル名について
 **パスカルケース**で、Unicode(UTF-8 シグネチャ付き)で作成してください。
@@ -9,6 +6,20 @@
 ExampleComponent.cs
 ```
 <br>
+
+## コピーライト表記について
+ファイルの一番上に以下のコメント文を追加してください。<br>
+`XXX`にファイル名、`YEAR`に現在の年度、<br>
+`説明`にそのファイルの説明`YOUR_NAME`に自分の名前を記述してください
+
+```C#
+/**
+ *  FileName    :   XXX.cs
+ *  Description :   説明
+ *
+ *  Copyright YEAR YOUR_NAME All rights reserved.
+ */
+```
 
 ## usingディレクティブについて
 ファイルの一番上に記述してください。<br>
@@ -299,10 +310,16 @@ public class Parameter
 
 ## field初期化について
 変数の宣言と同時に初期化をしてください。
+クラス・構造体の初期化を行う場合、`new()`を使用してください。
 ```C#
 private int _num = 0;
 
 private RigidBody _rigidBody = null;
+
+public void Initialize()
+{
+    _rigidBody = new();
+}
 ```
 
 ## getter・setterについて
@@ -533,10 +550,10 @@ public class ExampleClass : MonoBehaviour
 | --- | --- |
 | 関数を**登録**する | `RegisterXXXCallBack` |
 | 関数を**解除**する | `UnregisterXXXCallBack`|
-| 関数を**全解除**する | `AllUnregisterXXXCallBack`|
+| 関数を**全解除**する | `AllUnregisterXXXCallBacks`|
 | 関数を**追加**する | `AddXXXCallBack`|
 | 関数を**除外**する | `RemoveXXXCallBack`|
-| 関数を**全除外**する | `AllRemoveXXXCallBack`|
+| 関数を**全除外**する | `AllRemoveXXXCallBacks`|
 
 <details>
 
@@ -577,7 +594,7 @@ public class ExampleDelegate
     /// <summary>
     /// デリゲートの全解除
     /// </summary>
-    public void AllUnregisterSampleCallBack()
+    public void AllUnregisterSampleCallBacks()
     {
         _sampleCallBacks = null;
     }
@@ -624,6 +641,24 @@ private IEnumerator CoroutineExample()
 }
 ```
 
+## 引数について
+**キャメルケース**で記述し、[デフォルト引数](https://learn.microsoft.com/ja-jp/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#optional-arguments)は末端に記述してください。
+```C#
+public void ExampleFunciton(int name, int num = 0)
+{
+    // 処理
+}
+```
+
+## ref・outについて
+**キャメルケース**で記述し、[デフォルト引数](https://learn.microsoft.com/ja-jp/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#optional-arguments)より後に記述してください。
+```C#
+public bool ExampleFunciton(int name, int num = 0, out int retNum)
+{
+    // 処理
+    // return ...;
+}
+```
 
 ## verについて
 [組み込み型](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/builtin-types/built-in-types)についてはvarを使用しないでください。<br>
@@ -637,13 +672,32 @@ int num = 0;
 var rb = GetComponent<Rigidbody>();
 ```
 
-## ref・outについて
+## タプルについて
+[タプル型](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/builtin-types/value-tuples)は、**そのクラスのスコープ内**であれば使用しても構いません。<br>
+例えば、最小値と最大値を求めるときなどです。
+
+タプルのフィールド名は**必ず記述**してください。
+```C#
+private void ExampleFunciton()
+{
+    var minMax = GetMinMax();
+}
+
+private (int min, int max) GetMinMax()
+{
+    min = 0;
+    max = 100;
+}
+
+```
+
 
 ## ログ・アサーションについて
+`System.Diagnostics`の[`Debug.Assert`](https://learn.microsoft.com/ja-jp/dotnet/api/system.diagnostics.debug.assert?view=net-7.0)ではなく、<br>
+`UnityEngine.Assertions`の[`Assert`](https://docs.unity3d.com/ja/2021.1/ScriptReference/Assertions.Assert.html)を使用してください。
 
-## コピーライトについて
 
-### サンプルコード
+## サンプルコード
 長いので折りたたみ。
 
 <details>
