@@ -9,8 +9,8 @@
 - [5. Tab・スペースについて](#5-tabスペースについて)
 - [6. 中括弧について](#6-中括弧について)
 - [7. クラス内順序について](#7-クラス内順序について)
-  - [7.1. 修飾子順序について](#71-修飾子順序について)
-  - [7.2. メンバー・要素順序について](#72-メンバー要素順序について)
+  - [7.1. 修飾子](#71-修飾子)
+  - [7.2. 変数・関数](#72-変数関数)
 - [8. 名前空間について](#8-名前空間について)
 - [9. クラス・構造体・インターフェースについて](#9-クラス構造体インターフェースについて)
 - [10. 変数について](#10-変数について)
@@ -89,7 +89,7 @@ using UnityEngine.UI;
 using TMPro;
 // using 外部から取得したソースコードの名前空間;
 using NasanUtility;
-using Project.InGame.Player;
+using Project.InGame.Example;
 using Project.System;
 ```
 <br>
@@ -177,14 +177,14 @@ private int ExampleFunction(int num)
 <br>
 
 # 5. Tab・スペースについて
-Tabは一般的な半角スペース4つ分のものを使用してください。<br>
+Tabは**半角スペース4つ分**のものを使用してください。<br>
 
 半角スペースについては下記の表を参考にしてください。
 | 半角スペースを | 対象 |
 | --- | --- |
-| 空ける | `if for foreach while`<br>カンマ`,`<br>算術演算子`+ - * / % =`<br>比較演算子`> < & |` |
+| 空ける | `if for foreach while`<br>カンマ`,`<br>算術演算子`+ - * / % =`<br>比較演算子`> < & \|` |
 | 空けない | 論理否定演算子`!`<br>インクリメント`++`<br>デクリメント`--`|
-
+<br>
 
 ```C#
 /// <summary>
@@ -192,35 +192,41 @@ Tabは一般的な半角スペース4つ分のものを使用してください�
 /// </summary>
 /// <param name="num">数</param>
 /// <param name="flg">フラグ</param>
-private void ExampleSpaceFunction(int num, bool flg)
+private void ExampleFunction(int num, bool flg)
 {
-    // 算術・比較演算子は付ける
+    // 算術・比較演算子は空ける
+    // ifと()の間を空ける
     int total = num + num;
     if (total >= 0)
     {
-        // インクリメントには付けない
+        // インクリメントには空けない
         total++;
     }
     
-    // 論理否定演算子は付けない
+    // 論理否定演算子は空けない
     if (!flg)
     {
         flg = !flg;
     }
 }
 ```
+<br>
+<br>
+<br>
 
 # 6. 中括弧について
-字下げオールマンスタイルを使用してください。<br>
-nullチェックやフラグチェックの場合は、かつ一行で完結出来るものであれば中括弧なしで早期リターンを行ってください。<br>
-後述しますが、ラムダ式・Getter/Setterに関しては1行で記述できるのであれば1行で記述してください<br>
+**字下げオールマンスタイル**を使用してください。<br>
+
+`null`チェックやフラグのチェックなど、早期リターンを行う`if`文の場合は、<br>
+**一行で完結出来るものに限り**中括弧なしで早期リターンを行ってください。<br>
+
+[Getter/Setter](#12-getter・setterについて)・[ラムダ式](#17-ラムダ式について)に関しては**一行で完結出来るものに限り**一行で記述してください。<br>
 
 ```C#
 /// <summary>
 /// 中括弧のサンプル
 /// </summary>
-/// <param name="num">数</param>
-private void ExampleScope(int num)
+private void ExampleFunction()
 {
     // 早期リターンは一行でOk
     if (num > 0) return;
@@ -236,9 +242,12 @@ private void ExampleScope(int num)
     }
 }
 ```
+<br>
+<br>
+<br>
 
 # 7. クラス内順序について
-## 7.1. 修飾子順序について
+## 7.1. 修飾子
 以下の順序で記述してください。<br>
 1. `public`
 2. `protected`
@@ -253,8 +262,10 @@ private void ExampleScope(int num)
 11. `volatile`
 12. `async`
 <br>
+<br>
+<br>
 
-## 7.2. メンバー・要素順序について
+## 7.2. 変数・関数
 以下の順序で記述してください。
 1. `static const readonly` フィールド
 2. `public protected private` フィールド
@@ -266,25 +277,27 @@ private void ExampleScope(int num)
 8. 公開関数
 9. 内部関数
 10. `enum struct class`
-
-
+<br>
+<br>
+<br>
 
 # 8. 名前空間について
 基本的にはAssets以下のフォルダ階層と同じで、**パスカルケース**で付けてください。<br>
 ただし`Scripts`は省略します。<br>
 
-例：`Assets/Project/Scripts/InGame/Player/PlayerMovement.cs`の場合<br>
+例：`Assets/Project/Scripts/InGame/Example/ExampleClass.cs`の場合<br>
 ```C#
-namespace Project.InGame.Player
+namespace Project.InGame.Example
 {
     /// <summary> プレイヤー移動 </summary>
-    public class PlayerMovement
+    public class ExampleClass
     {
-        /// <summary> 移動速度 </summary>
-        private float _speed = 1.0f;
+        // クラス内の記述
     }
 }
 ```
+<br>
+<br>
 <br>
 
 # 9. クラス・構造体・インターフェースについて
@@ -309,38 +322,45 @@ public interface IExampleInterface
 
 }
 ```
+<br>
+<br>
+<br>
 
 # 10. 変数について
 **キャメルケース**で記述してください。<br>
-`private`な変数は頭に`_`を付けて**キャメルケース**で記述してください。<br>
+`private`変数は頭に`_`を付けて**キャメルケース**で記述してください。<br>
 
 ```C#
-public string name = "SuperName";
-protected int maxHp = 10;
-protected int _hp = 0;
+public string publicName = "Name";
+protected int protectedNum = 10;
+private int _privateNum = 0;
 ```
+<br>
 
-なお、inspectorに表示させる為だけに`public`修飾子を付けるのは控えてください。<br>
-初期値を変更するのであれば`[Serializefield]`属性を付けた`private`変数を検討してください。<br>
+**inspectorに設定させる目的**だけで`public`修飾子を付けるのは**控えてください**。<br>
 
-データ用のクラス(例えばプレイヤーのパラメータなど)のクラスであれば、<br>
-`public`変数を使用しても構いません。<br>
+inspector設定させたいのであれば[`Serializefield`](https://docs.unity3d.com/ja/2023.2/ScriptReference/SerializeField.html)属性を付けた`private`変数を追記したり、<br>
+[`Serializable`](https://docs.unity3d.com/ja/2023.2/ScriptReference/Serializable.html)属性を付けたデータ用の`class`を作成し、<br>
+作成したデータ用`class`を[`Serializefield`](https://docs.unity3d.com/ja/2023.2/ScriptReference/SerializeField.html)属性つけて`private`変数として扱うなどしてください。
 
-変数名にクラスの役割を入れる場合は、末端にその名前を記述してください。<br>
+<details>
+
+<summary>サンプルコード</summary>
+
 ```C#
 using System;
 using UnityEngine;
 
-/// <summary> プレイヤークラス </summary>
-public class Player : MonoBehaviour
+/// <summary> サンプルクラス </summary>
+public class ExampleClass : MonoBehaviour
 {
     // ----------------------------------------------------------------------
     // 変数
     // ----------------------------------------------------------------------
 
-    /// <summary> パラメータ </summary>
+    /// <summary> パラメータクラス </summary>
     [Serializefield]
-    private Parameter _playerParam = null;
+    private ExampleParameter _playerParam = null;
 
     // ----------------------------------------------------------------------
     // Unityメゾット
@@ -357,7 +377,7 @@ public class Player : MonoBehaviour
 
 /// <summary> パラメータクラス </summary>
 [Serializable]
-public class Parameter
+public class ExampleParameter
 {
     /// <summary> 体力 </summary>
     public int hp = 0;
@@ -367,6 +387,10 @@ public class Parameter
 }
 ```
 
+</details>
+<br>
+<br>
+<br>
 
 # 11. field初期化について
 変数の宣言と同時に初期化をしてください。
