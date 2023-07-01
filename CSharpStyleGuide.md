@@ -300,10 +300,10 @@ public class Parameter
 private int _num = 0;
 
 // 推奨getter
-public int Num => _num;
+public int num => _num;
 
 // こちらでもOK
-public int Number { get _num; }
+public int number { get _num; }
 ```
 
 値を変換・計算して値を渡す場合は、<br>
@@ -313,7 +313,7 @@ public int Number { get _num; }
 private int _num = 0;
 
 // NG
-//public int Num => _num+1;
+//public int num => _num + 1;
 
 // OK
 /// <summary>
@@ -336,7 +336,7 @@ public int GetNumber()
 private int _num = 0;
 
 // NG
-//public int Num { set value; }
+//public int num { set value; }
 
 // OK
 /// <summary>
@@ -351,11 +351,50 @@ public int SetNumber(int num)
 }
 ```
 
-## 列挙型・定数について
+## 定数について
+**パスカルケース**で、記述してください。
+```C#
+public static int StaticNumber = 0;
+public const int ConstantNumber = 0;
+```
 
+## 列挙型について
+**パスカルケース**で、記述してください。<br>
+一番最初の列挙名には初期値`=0`を付け、<br>
+除外用の列挙名にはその列挙型内の最低値を入れてください。<br>
+```C#
+/// <summary> 状態異常 </summary>
+public enum Condition
+{
+    Normal      = 0,  // 通常
+    Poison,           // 毒
+    Paralysis,        // マヒ
+    Sleep,            // 眠り
+    Dead,             // 死亡
+    Max,              // 最大
+    None        = -1; // 除外
+}
+```
+
+フラグ用の列挙型には`[Flags]`属性を付け、<br>
+シフト演算子で記述してください。<br>
+```C#
+/// <summary> 状態異常 </summary>
+[Flags]
+public enum Condition
+{
+    Normal      = 0,    // 通常
+    Poison      = 1<<1, // 毒
+    Paralysis   = 1<<2, // マヒ
+    Sleep       = 1<<3, // 眠り
+    Dead        = 1<<4, // 死亡
+    Max         = 1<<5, // 最大
+}
+```
 
 
 ## 属性について
+属性について書く
 
 ## ref・out・verについて
 
@@ -423,7 +462,7 @@ namespace Project.Example
         private int _number = 1;
 
         /// <summary> ナンバーのゲッター </summary>
-        public int Nummber => _number;
+        public int nummber => _number;
 
         /// <summary> デリゲート </summary>
         public Action _exampleCallBacks = null;
