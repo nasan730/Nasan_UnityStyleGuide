@@ -16,8 +16,8 @@
 - [10. 変数について](#10-変数について)
 - [11. field初期化について](#11-field初期化について)
 - [12. getter・setterについて](#12-gettersetterについて)
-  - [12.1. getterプロパティについて](#121-getterプロパティについて)
-  - [12.2. setterプロパティについて](#122-setterプロパティについて)
+  - [12.1. getterプロパティ](#121-getterプロパティ)
+  - [12.2. setterプロパティ](#122-setterプロパティ)
 - [13. 定数について](#13-定数について)
 - [14. 列挙型について](#14-列挙型について)
 - [15. 属性について](#15-属性について)
@@ -393,43 +393,52 @@ public class ExampleParameter
 <br>
 
 # 11. field初期化について
-変数の宣言と同時に初期化をしてください。
+**変数の宣言と同時に初期化**をしてください。
 クラス・構造体の初期化を行う場合、`new()`を使用してください。
 ```C#
+/// <summary> 変数サンプル </summary>
 private int _num = 0;
 
-private RigidBody _rigidBody = null;
+/// <summary> 変数クラスサンプル </summary>
+private ExampleClass _example = null;
 
+/// <summary>
+/// 初期化
+/// </summary>
 public void Initialize()
 {
-    _rigidBody = new();
+    _example = new();
 }
 ```
+<br>
+<br>
+<br>
 
 # 12. getter・setterについて
-## 12.1. getterプロパティについて
-`{ get XXX; }` ・ `=>`どちらを使用しても構いませんが、こだわりがなければ`=>`を使用してください。<br>
-また、1行で記述してください。
+## 12.1. getterプロパティ
+`{ get XXX; }` ・ `=>`どちらを使用しても構いませんが、こだわりがなければ`=>`**を使用してください。**<br>
+また、1行で記述してください。<br>
 ```C#
 private int _num = 0;
 
-// 推奨getter
+// ◎ 推奨するgetter記述
 public int num => _num;
 
-// こちらでもOK
+// 〇 こちらでもOK
 public int number { get _num; }
 ```
+<br>
 
-値を変換・計算して値を渡す場合は、<br>
-`getter`プロパティを使用せず、頭に`Get`を付けた関数で渡すようにしてください。
+値を変換・計算して値を取得する場合は、<br>
+`getter`プロパティを使用せず、頭に`Get`を付けた関数で取得するようにしてください。<br>
 
 ```C#
 private int _num = 0;
 
-// NG
+// × NG
 //public int num => _num + 1;
 
-// OK
+// 〇 OK
 /// <summary>
 /// 計算した数を取得
 /// </summary>
@@ -439,20 +448,23 @@ public int GetNumber()
     return _num + 1;
 }
 ```
+<br>
+<br>
+<br>
 
-## 12.2. setterプロパティについて
+## 12.2. setterプロパティ
 **使用しないでください。**<br>
-`private`変数に`setter`を付けることは、`public`変数で自由に値を変更していることと同じです。<br>
+`private`変数に`setter`を付けることは、`public`変数で自由に値を変更してしまっている事と同じです。<br>
 
-値を変更したい場合は、どこから参照されているかがデバッグしやすくするため、<br>
-頭に`Set`を付けた関数で値を設定して下さい。<br>
+値を変更したい場合、**どこから参照されているかをデバッグしやすくするため**に<br>
+頭に`Set`を付けた**関数で値を設定させるようにしてください**。<br>
 ```C#
 private int _num = 0;
 
-// NG
+// × NG
 //public int num { set value; }
 
-// OK
+// 〇 OK
 /// <summary>
 /// 値を設定
 /// </summary>
@@ -464,6 +476,9 @@ public int SetNumber(int num)
     _num = num;
 }
 ```
+<br>
+<br>
+<br>
 
 # 13. 定数について
 **パスカルケース**で、記述してください。
@@ -471,6 +486,9 @@ public int SetNumber(int num)
 public static int StaticNumber = 0;
 public const int ConstantNumber = 0;
 ```
+<br>
+<br>
+<br>
 
 # 14. 列挙型について
 **パスカルケース**で、記述してください。<br>
@@ -489,8 +507,9 @@ public enum Condition
     None        = -1; // 除外
 }
 ```
+<br>
 
-フラグ用の列挙型には`[Flags]`属性を付け、<br>
+フラグ用の列挙型には[`Flags`](https://learn.microsoft.com/ja-jp/dotnet/api/system.flagsattribute?view=net-7.0)属性を付け、<br>
 シフト演算子で記述してください。<br>
 ```C#
 /// <summary> 状態異常 </summary>
@@ -505,11 +524,13 @@ public enum Condition
     Max         = 1<<5, // 最大
 }
 ```
-
+<br>
+<br>
+<br>
 
 # 15. 属性について
-`Serializefield`を使用しているのであれば一番上に記述し、<br>
-それ以降はアルファベット順で、属性1つごとに改行して記述してください。<br>
+[`Serializefield`](https://docs.unity3d.com/ja/2023.2/ScriptReference/SerializeField.html)を**使用しているのであれば一番上に記述**し、<br>
+それ以降は**属性一つごとに改行して記述**してください。<br>
 ```C#
 [Serializefield]
 [Min(0)]
@@ -519,7 +540,11 @@ private int _num = 0;
 
 # 16. デリゲートについて
 基本的に`private`で作成し、末尾に`CallBacks`を付けて**キャメルケース**で記述してください。<br>
-デリゲートに関数を登録・解除する場合は[デリゲート関連の関数ルール](#デリゲート関連の関数ルール)を参考に作成してください。
+
+デリゲートに関数を登録・解除する時は[デリゲート関連の関数ルール](#デリゲート関連の関数ルール)を参考に作成してください。
+<br>
+<br>
+<br>
 
 # 17. ラムダ式について
 一行で記述出来るのであれば一行で記述してください。
