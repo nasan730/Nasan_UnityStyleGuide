@@ -251,6 +251,8 @@ protected int _hp = 0;
 
 データ用のクラス(例えばプレイヤーのパラメータなど)のクラスであれば、<br>
 `public`変数を使用しても構いません。<br>
+
+変数名にクラスの役割を入れる場合は、末端にその名前を記述してください。<br>
 ```C#
 using System;
 using UnityEngine;
@@ -264,7 +266,7 @@ public class Player : MonoBehaviour
 
     /// <summary> パラメータ </summary>
     [Serializefield]
-    private Parameter _param = null;
+    private Parameter _playerParam = null;
 
     // ----------------------------------------------------------------------
     // Unityメゾット
@@ -291,6 +293,14 @@ public class Parameter
 }
 ```
 
+
+## field初期化について
+変数の宣言と同時に初期化をしてください。
+```C#
+private int _num = 0;
+
+private RigidBody _rigidBody = null;
+```
 
 ## getter・setterについて
 ### getterプロパティについて
@@ -394,11 +404,212 @@ public enum Condition
 
 
 ## 属性について
-属性について書く
+`Serializefield`を使用しているのであれば一番上に記述し、<br>
+それ以降はアルファベット順で、属性1つごとに改行して記述してください。<br>
+```C#
+[Serializefield]
+[Min(0)]
+[Max(10)]
+private int _num = 0;
+```
 
-## ref・out・verについて
+## デリゲートについて
+基本的に`private`で作成し、末尾に`CallBacks`を付けて**キャメルケース**で記述してください。<br>
+デリゲートに関数を登録・解除する場合は以下のルールを参考に作成してください。
+[Test](###デリゲート関連の関数ルール)
 
-## field初期化について
+
+<details>
+
+<summary>サンプルコード</summary>
+
+```C#
+/// <summary> デリゲートサンプルクラス </summary>
+public class ExampleDelegate
+{
+    // ----------------------------------------------------------------------
+    // 変数
+    // ----------------------------------------------------------------------
+
+    /// <summary> デリゲートサンプル </summary>
+    private Action _sampleCallBacks = null;
+
+    /// <summary>
+    /// デリゲートの登録
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void RegisterSampleCallBack(Action callBack)
+    {
+        _sampleCallBacks = callBack;
+    }
+
+    /// <summary>
+    /// デリゲートの解除
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void UnregisterSampleCallBack(Action callBack)
+    {
+        if(callBack == _sampleCallBacks)
+        {
+            _sampleCallBacks = null;
+        }
+    }
+
+    /// <summary>
+    /// デリゲートの全解除
+    /// </summary>
+    public void AllUnregisterSampleCallBack()
+    {
+        _sampleCallBacks = null;
+    }
+
+    /// <summary>
+    /// デリゲートの追加
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void AddSampleCallBack(Action callBack)
+    {
+        _sampleCallBacks += callBack;
+    }
+
+    /// <summary>
+    /// デリゲートの除外
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void RemoveSampleCallBack(Action callBack)
+    {
+        _sampleCallBacks -= callBack;
+    }
+
+    /// <summary>
+    /// デリゲートの全除外
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void AllRemoveSampleCallBack()
+    {
+        _sampleCallBacks = callBack;
+    }
+}
+```
+
+</details>
+
+## 関数名について
+### 共通ルール
+**パスカルケース**で、記述してください。
+```C#
+/// <summary> サンプル関数 </summary>
+private void ExampleFunction()
+{
+    // 処理
+}
+```
+
+### デリゲート関連の関数ルール
+デリゲートに関数を**登録・解除行う**場合は以下のルールを参考に作成してください。
+
+| 条件 | 関数名 |
+| --- | --- |
+| 関数を**登録**する | `RegisterXXXCallBack` |
+| 関数を**解除**する | `UnregisterXXXCallBack`|
+| 関数を**全解除**する | `AllUnregisterXXXCallBack`|
+| 関数を**追加**する | `AddXXXCallBack`|
+| 関数を**除外**する | `RemoveXXXCallBack`|
+| 関数を**全除外**する | `AllRemoveXXXCallBack`|
+
+<details>
+
+<summary>サンプルコード</summary>
+
+```C#
+/// <summary> デリゲートサンプルクラス </summary>
+public class ExampleDelegate
+{
+    // ----------------------------------------------------------------------
+    // 変数
+    // ----------------------------------------------------------------------
+
+    /// <summary> デリゲートサンプル </summary>
+    private Action _sampleCallBacks = null;
+
+    /// <summary>
+    /// デリゲートの登録
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void RegisterSampleCallBack(Action callBack)
+    {
+        _sampleCallBacks = callBack;
+    }
+
+    /// <summary>
+    /// デリゲートの解除
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void UnregisterSampleCallBack(Action callBack)
+    {
+        if(callBack == _sampleCallBacks)
+        {
+            _sampleCallBacks = null;
+        }
+    }
+
+    /// <summary>
+    /// デリゲートの全解除
+    /// </summary>
+    public void AllUnregisterSampleCallBack()
+    {
+        _sampleCallBacks = null;
+    }
+
+    /// <summary>
+    /// デリゲートの追加
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void AddSampleCallBack(Action callBack)
+    {
+        _sampleCallBacks += callBack;
+    }
+
+    /// <summary>
+    /// デリゲートの除外
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void RemoveSampleCallBack(Action callBack)
+    {
+        _sampleCallBacks -= callBack;
+    }
+
+    /// <summary>
+    /// デリゲートの全除外
+    /// </summary>
+    /// <param name="callBack">デリゲート</param>
+    public void AllRemoveSampleCallBack()
+    {
+        _sampleCallBacks = callBack;
+    }
+}
+```
+
+</details>
+
+
+### コルーチン
+
+
+## verについて
+[組み込み型](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/builtin-types/built-in-types)についてはvarを使用しないでください。<br>
+それ以外の型については型が明示されているのであれば使用しても構いません。<br>
+```C#
+// NG
+int num = 0;
+//var tmp = num;
+
+// OK
+Rigidbody rb = null;
+rb = GetComponent<Rigidbody>();
+```
+
+## ref・outについて
 
 ## ログ・アサーションについて
 
