@@ -822,10 +822,10 @@ public void ExampleFunciton(string name, int num)
 <br>
 <br>
 
-## 19.1. デフォルト引数・ref・out
-[デフォルト引数](https://learn.microsoft.com/ja-jp/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#optional-arguments) -> [`out`](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/keywords/out-parameter-modifier) -> [`ref`](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/keywords/ref) の順で記述してください。
+## 19.1. デフォルト引数・out・ref
+[デフォルト引数](https://learn.microsoft.com/ja-jp/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#optional-arguments) -> [`ref`](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/keywords/ref) -> [`out`](https://learn.microsoft.com/ja-jp/dotnet/csharp/language-reference/keywords/out-parameter-modifier) の順で記述してください。
 ```C#
-public bool ExampleFunciton(int name, int num = 0, out int retNum)
+public bool ExampleFunciton(int name, ref int num = 0, out int retNum)
 {
     // 処理
     // return ...;
